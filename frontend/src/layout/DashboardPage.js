@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import BeasiswaDetail from '../components/BeasiswaDetail';
 import BeasiswaList from '../components/BeasiswaList';
+import TableSiswaComponent from '../components/TableSiswaComponent';
+import { getSiswa } from '../lib/getSiswa';
 import useAuthStore from '../store/auth';
 
 const detailSiswa = {
@@ -68,6 +70,7 @@ const beasiswaMitraList = [
 function DashboardPage() {
   const [detailUser, setDetailUser] = useState(null);
   const [activeBeasiswa, setActiveBeasiswa] = useState(null);
+  const [listSiswa, setListSiswa] = useState();
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
@@ -78,6 +81,9 @@ function DashboardPage() {
         setDetailUser({
           mitra: detailMitra,
           dataBeasiswa: beasiswaMitraList,
+        });
+        getSiswa().then((d) => {
+          setListSiswa(d.data);
         });
       }
     }, 500);
@@ -97,7 +103,10 @@ function DashboardPage() {
             setActiveBeasiswa={setActiveBeasiswa}
           />
           {detailUser.dataBeasiswa && (
-            <BeasiswaDetail beasiswa={activeBeasiswa} mitra={detailMitra} />
+            <>
+              <BeasiswaDetail beasiswa={activeBeasiswa} mitra={detailMitra} />
+              <TableSiswaComponent siswaList={listSiswa} />
+            </>
           )}
         </div>
       )}

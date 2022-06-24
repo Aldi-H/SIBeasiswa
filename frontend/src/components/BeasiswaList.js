@@ -16,6 +16,8 @@ function BeasiswaList({ beasiswaList, activeBeasiswa, setActiveBeasiswa }) {
               <p className="font-semibold leading-tight">
                 {beasiswa.judul_beasiswa}
               </p>
+              {/* <p className="font-semibold leading-tight">{beasiswa.nama}</p> */}
+              {/* <p>{beasiswa.namaMitra}</p> */}
               <p>{beasiswa.namaMitra}</p>
             </div>
           ))}

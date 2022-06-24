@@ -77,6 +77,7 @@ function DashboardPage() {
     setTimeout(() => {
       if (user.role === 'SISWA') {
         setDetailUser(detailSiswa);
+        console.log('siswa');
       } else if (user.role === 'MITRA') {
         setDetailUser({
           mitra: detailMitra,
@@ -85,6 +86,7 @@ function DashboardPage() {
         getSiswa().then((d) => {
           setListSiswa(d.data);
         });
+        console.log(setDetailUser);
       }
     }, 500);
   }, []);
@@ -105,7 +107,7 @@ function DashboardPage() {
           {detailUser.dataBeasiswa && (
             <>
               <BeasiswaDetail beasiswa={activeBeasiswa} mitra={detailMitra} />
-              <TableSiswaComponent siswaList={listSiswa} />
+              <TableSiswaComponent siswaList={listSiswa} mitra={detailMitra} />
             </>
           )}
         </div>

@@ -41,6 +41,15 @@ function LandingPage() {
           />
         ))}
       </div>
+      {/* <div className="flex flex-wrap justify-center pb-8">
+        {beasiswaList.slice(0, 4).map((item) => (
+          <LandingPageCard
+            key={item.nama}
+            title={item.nama}
+            description={item.deskripsi}
+          />
+        ))}
+      </div> */}
     </div>
   );
 }

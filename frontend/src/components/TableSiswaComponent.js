@@ -28,7 +28,7 @@ function TableSiswaComponent({ siswaList }) {
                 </tr>
               </thead>
               <tbody>
-                {siswaList.map((data, index) => (
+                {/* {siswaList.map((data, index) => (
                   <tr
                     key={index}
                     className="border-b bg-white transition duration-300 ease-in-out hover:bg-gray-100"
@@ -53,7 +53,7 @@ function TableSiswaComponent({ siswaList }) {
                       {data.status}
                     </td>
                   </tr>
-                ))}
+                ))} */}
               </tbody>
             </table>
           </div>

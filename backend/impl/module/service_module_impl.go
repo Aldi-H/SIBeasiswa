@@ -17,12 +17,14 @@ func NewServiceModuleImpl(dataModule module.DataModule) *serviceModuleImpl {
 	return &serviceModuleImpl{
 		siswaService: serviceImpl.NewSiswaServiceImpl(
 			dataModule.GetSiswaRepository(),
+			dataModule.GetBeasiswaSiswaRepository(),
 		),
 		mitraService: serviceImpl.NewMitraServiceImpl(
 			dataModule.GetMitraRepository(),
 		),
 		beasiswaService: serviceImpl.NewBeasiswaServiceImpl(
 			dataModule.GetBeasiswaRepository(),
+			dataModule.GetMitraRepository(),
 		),
 		beasiswaSiswaService: serviceImpl.NewBeasiswaSiswaServiceImpl(
 			dataModule.GetBeasiswaSiswaRepository(),

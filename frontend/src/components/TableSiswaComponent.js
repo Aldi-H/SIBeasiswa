@@ -1,8 +1,8 @@
-function TableSiswaComponent({ siswaList }) {
+function TableSiswaComponent({ dataSiswa }) {
   return (
-    <div className="mt-8 flex flex-col">
+    <div className="flex flex-col">
       <div className="overflow-x-auto">
-        <div className="inline-block min-w-full py-2 lg:px-4">
+        <div className="inline-block min-w-full py-2">
           <div className="overflow-hidden rounded-md">
             <table className="min-w-full">
               <thead className="border-b bg-slate-200">
@@ -28,32 +28,32 @@ function TableSiswaComponent({ siswaList }) {
                 </tr>
               </thead>
               <tbody>
-                {/* {siswaList.map((data, index) => (
+                {dataSiswa.map((data, index) => (
                   <tr
                     key={index}
                     className="border-b bg-white transition duration-300 ease-in-out hover:bg-gray-100"
                     onClick={() => console.log('Clicked ' + data.id)}
                   >
-                    <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                       {data.id}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-normal text-gray-900">
                       {data.nama}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-normal text-gray-900">
-                      {data.nama_instansi}
+                      {data.namaInstansi}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-normal text-gray-900">
                       {data.alamat}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-normal text-gray-900">
-                      {data.no_telepon}
+                      {data.email}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-normal text-gray-900">
                       {data.status}
                     </td>
                   </tr>
-                ))} */}
+                ))}
               </tbody>
             </table>
           </div>

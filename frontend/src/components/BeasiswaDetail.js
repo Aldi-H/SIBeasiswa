@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
+import TableSiswaComponent from './TableSiswaComponent';
 
 function BeasiswaDetail({ beasiswa, mitra }) {
   return (
@@ -10,10 +11,11 @@ function BeasiswaDetail({ beasiswa, mitra }) {
         </p>
       ) : (
         <>
-          <h2 className="text-xl font-semibold">{beasiswa.judul_beasiswa}</h2>
-          {/* <h2 className="text-xl font-semibold">{beasiswa.nama}</h2> */}
+          <h2 className="text-xl font-semibold">
+            {beasiswa.judulBeasiswa || beasiswa.namaBeasiswa}
+          </h2>
           <div className="flex gap-4">
-            <p>{beasiswa.namaMitra}</p>
+            <p>{beasiswa.namaMitra || 'Mitra'}</p>
             {mitra && (
               <p className="font-semibold">
                 {mitra.pic} ({mitra.nomorPic})
@@ -36,35 +38,20 @@ function BeasiswaDetail({ beasiswa, mitra }) {
               </time>
             </div>
           )}
-          {beasiswa.tanggal_pembukaan && beasiswa.tanggal_penutupan && (
-            <div className="mt-2 grid w-fit grid-cols-[auto_auto] gap-x-4">
-              <span className="font-semibold">Buka</span>
-              <time dateTime={beasiswa.tanggal_pembukaan}>
-                {format(new Date(beasiswa.tanggal_pembukaan), 'dd MMMM yyyy', {
-                  locale: id,
-                })}
-              </time>
-              <span className="font-semibold">Tutup</span>
-              <time dateTime={beasiswa.tanggal_penutupan}>
-                {format(new Date(beasiswa.tanggal_penutupan), 'dd MMMM yyyy', {
-                  locale: id,
-                })}
-              </time>
-            </div>
-          )}
-          {/* {beasiswa.statusPendaftaran && (
+          {(beasiswa.status || beasiswa.statusPendaftaran) && (
             <div
               className={`mt-8 inline-block rounded border px-2 py-1 text-sm font-semibold ${
-                beasiswa.statusPendaftaran === 'Diterima'
+                (beasiswa.status || beasiswa.statusPendaftaran) === 'Diterima'
                   ? 'bg-green-100 text-green-900'
-                  : beasiswa.statusPendaftaran === 'Ditolak'
+                  : (beasiswa.status || beasiswa.statusPendaftaran) ===
+                    'Ditolak'
                   ? 'bg-red-100 text-red-900'
                   : 'bg-gray-100 text-gray-900'
               }`}
             >
-              {beasiswa.statusPendaftaran}
+              {beasiswa.status || beasiswa.statusPendaftaran}
             </div>
-          )} */}
+          )}
           {beasiswa.statusPendaftaran && (
             <div
               className={`mt-8 inline-block rounded border px-2 py-1 text-sm font-semibold ${
@@ -78,14 +65,8 @@ function BeasiswaDetail({ beasiswa, mitra }) {
               {beasiswa.statusPendaftaran}
             </div>
           )}
-          <h2 className="mt-6 font-semibold">Deskripsi</h2>
-          <p className="mt-1">{beasiswa.deskripsi}</p>
-          <h2 className="mt-6 font-semibold">Benefits</h2>
-          <p className="mt-1">
-            {beasiswa.benefits.split(`\\n`).map((benefits) => (
-              <p>{benefits}</p>
-            ))}
-          </p>
+          <p className="mt-4">{beasiswa.deskripsi}</p>
+          {/* <TableSiswaComponent /> */}
         </>
       )}
     </div>

@@ -35,8 +35,8 @@ function LandingPage() {
       <div className="flex flex-wrap justify-center pb-8">
         {beasiswaList.slice(0, 4).map((item) => (
           <LandingPageCard
-            key={item.id}
-            title={item.judul_beasiswa}
+            key={item.judulBeasiswa}
+            title={item.judulBeasiswa}
             description={item.deskripsi}
           />
         ))}

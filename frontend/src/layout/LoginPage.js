@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import useAuthStore from '../store/auth';
-import { mitraLogin, siswaLogin } from '../lib/login';
-// import { mitraLogin } from '../lib/mitraLogin';
+import { login } from '../lib/login';
 
 function LoginPage() {
   const [formValues, setFormValues] = useState({});
+  const [error, setError] = useState('');
   const [role, setRole] = useState('SISWA');
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
-  const user = useAuthStore((state) => state.user);
 
   const handleInputChange = (e) => {
     setFormValues({
@@ -25,29 +24,15 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const dataMitra = await mitraLogin(formValues.email, formValues.password);
-    // const dataSiswa = await siswaLogin(formValues.email, formValues.password);
-    // setUser({ ...dataMitra, ...formValues });
-    // setUser({ ...dataSiswa, ...formValues });
-
-    if (role === 'SISWA') {
-      const dataSiswa = await siswaLogin(formValues.email, formValues.password);
-      setUser({ ...dataSiswa, ...formValues });
-    } else if (role === 'MITRA') {
-      const dataMitra = await mitraLogin(formValues.email, formValues.password);
-      setUser({ ...dataMitra, ...formValues });
+    try {
+      const data = await login(role, formValues.email, formValues.password);
+      setUser(data);
+      navigate('/dashboard');
+    } catch (error) {
+      const { message } = error.response.data;
+      setError(message);
     }
-
-    console.log(role);
-    navigate('/dashboard');
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const data = await login(formValues.email, formValues.password);
-  //   setUser({ ...data, ...formValues });
-  //   navigate('/dashboard');
-  // };
 
   return (
     <div className="mx-auto max-w-[448px] py-10">
@@ -78,18 +63,31 @@ function LoginPage() {
       <form className="space-y-6 bg-gray-200 p-8" onSubmit={handleSubmit}>
         <Input
           name="email"
-          value={formValues.email}
+          value={formValues.email || ''}
           type="email"
           label="Alamat email"
           onChange={handleInputChange}
         />
         <Input
           name="password"
-          value={formValues.password}
+          value={formValues.password || ''}
           type="password"
           label="Password"
           onChange={handleInputChange}
         />
+
+        {error && (
+          <div className="flex gap-2 text-red-500">
+            <p className="font-medium">{error}</p>
+            <button
+              onClick={() => {
+                setError(false);
+              }}
+            >
+              &#10005;
+            </button>
+          </div>
+        )}
         <button className="w-full rounded-sm bg-black py-2 text-white hover:bg-gray-800">
           Submit
         </button>

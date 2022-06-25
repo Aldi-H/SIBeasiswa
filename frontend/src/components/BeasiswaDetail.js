@@ -10,8 +10,8 @@ function BeasiswaDetail({ beasiswa, mitra }) {
         </p>
       ) : (
         <>
-          {/* <h2 className="text-xl font-semibold">{beasiswa.judul_beasiswa}</h2> */}
-          <h2 className="text-xl font-semibold">{beasiswa.nama}</h2>
+          <h2 className="text-xl font-semibold">{beasiswa.judul_beasiswa}</h2>
+          {/* <h2 className="text-xl font-semibold">{beasiswa.nama}</h2> */}
           <div className="flex gap-4">
             <p>{beasiswa.namaMitra}</p>
             {mitra && (
@@ -78,7 +78,14 @@ function BeasiswaDetail({ beasiswa, mitra }) {
               {beasiswa.statusPendaftaran}
             </div>
           )}
-          <p className="mt-4">{beasiswa.deskripsi}</p>
+          <h2 className="mt-6 font-semibold">Deskripsi</h2>
+          <p className="mt-1">{beasiswa.deskripsi}</p>
+          <h2 className="mt-6 font-semibold">Benefits</h2>
+          <p className="mt-1">
+            {beasiswa.benefits.split(`\\n`).map((benefits) => (
+              <p>{benefits}</p>
+            ))}
+          </p>
         </>
       )}
     </div>

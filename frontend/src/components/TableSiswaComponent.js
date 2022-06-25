@@ -1,8 +1,8 @@
 function TableSiswaComponent({ siswaList }) {
   return (
-    <div className="flex flex-col">
+    <div className="mt-8 flex flex-col">
       <div className="overflow-x-auto">
-        <div className="inline-block min-w-full py-2 lg:px-8">
+        <div className="inline-block min-w-full py-2 lg:px-4">
           <div className="overflow-hidden rounded-md">
             <table className="min-w-full">
               <thead className="border-b bg-slate-200">

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getBeasiswaList(page, limit) {
+async function getBeasiswaList(page, limit) {
   try {
     const params = new URLSearchParams({
       page: page ?? 1,
@@ -14,3 +14,13 @@ export async function getBeasiswaList(page, limit) {
     console.log(error);
   }
 }
+
+const beasiswaSiswa = async () => {
+  try {
+    const response = await axios.get();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getBeasiswaList };

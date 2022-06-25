@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import BeasiswaDetail from '../components/BeasiswaDetail';
+import BeasiswaDetailMitra from '../components/BeasiswaDetailMitra';
 import BeasiswaList from '../components/BeasiswaList';
 import TableSiswaComponent from '../components/TableSiswaComponent';
 import { getSiswa } from '../lib/getSiswa';
 import useAuthStore from '../store/auth';
+import { getBeasiswaList } from '../lib/beasiswa';
 
 const detailSiswa = {
   siswa: {
@@ -70,6 +72,7 @@ const beasiswaMitraList = [
 function DashboardPage() {
   const [detailUser, setDetailUser] = useState(null);
   const [activeBeasiswa, setActiveBeasiswa] = useState(null);
+  const [beasiswaList, setBeasiswaList] = useState(null);
   const [listSiswa, setListSiswa] = useState();
   const user = useAuthStore((state) => state.user);
 
@@ -77,6 +80,7 @@ function DashboardPage() {
     setTimeout(() => {
       if (user.role === 'SISWA') {
         setDetailUser(detailSiswa);
+        // setDetailUser(getSiswa);
         console.log('siswa');
       } else if (user.role === 'MITRA') {
         setDetailUser({
@@ -91,27 +95,40 @@ function DashboardPage() {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    getBeasiswaList().then((d) => {
+      setBeasiswaList(d.data);
+    });
+  }, []);
+
   return (
     <div>
-      {!detailUser ? (
+      {/* {!detailUser ? (
         <div className="mt-16 text-center">
           <ClipLoader />
         </div>
-      ) : (
-        <div className="mx-auto grid max-w-screen-lg grid-cols-[1fr_2fr] items-start gap-4 py-16 px-4">
-          <BeasiswaList
-            beasiswaList={detailUser.dataBeasiswa}
-            activeBeasiswa={activeBeasiswa}
-            setActiveBeasiswa={setActiveBeasiswa}
-          />
-          {detailUser.dataBeasiswa && (
+      ) : ( */}
+      <div className="mx-auto grid max-w-screen-lg grid-cols-[1fr_2fr] items-start gap-4 py-16 px-4">
+        <BeasiswaList
+          beasiswaList={beasiswaList}
+          activeBeasiswa={activeBeasiswa}
+          setActiveBeasiswa={setActiveBeasiswa}
+        />
+        {/* {detailUser.dataBeasiswa && (
             <>
               <BeasiswaDetail beasiswa={activeBeasiswa} mitra={detailMitra} />
               <TableSiswaComponent siswaList={listSiswa} mitra={detailMitra} />
             </>
-          )}
-        </div>
-      )}
+          )} */}
+        {detailUser === 'Mitra' ? (
+          <h1>Siswa</h1>
+        ) : (
+          <>
+            {beasiswaList && <BeasiswaDetailMitra beasiswa={activeBeasiswa} />}
+          </>
+        )}
+      </div>
+      {/* )} */}
     </div>
   );
 }

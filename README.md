@@ -4,6 +4,9 @@
 
 https://dbdesigner.page.link/ZFAEXxamCFztcUUB7
 
+## API Specification
+https://www.postman.com/final-project-engineering-5/workspace/final-project-engineering-5
+
 ## Run Backend
 
 1. Install Golang, lihat panduan: https://go.dev/doc/install

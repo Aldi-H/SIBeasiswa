@@ -15,12 +15,22 @@ async function getBeasiswaList(page, limit) {
   }
 }
 
-const beasiswaSiswa = async () => {
-  try {
-    const response = await axios.get();
-  } catch (error) {
-    console.log(error);
-  }
-};
+export async function getBeasiswa(idBeasiswa) {
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_BASE_URL}/api/beasiswa/${idBeasiswa}`
+  );
+  return response.data;
+}
 
-export { getBeasiswaList };
+export async function applyBeasiswa(token, idSiswa, idBeasiswa) {
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}/api/beasiswa-siswa`,
+    { idSiswa, idBeasiswa },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}

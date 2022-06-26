@@ -1,8 +1,20 @@
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
+import { useEffect, useState } from 'react';
+import { getBeasiswa } from '../lib/beasiswa';
 import TableSiswaComponent from './TableSiswaComponent';
 
-function BeasiswaDetailMitra({ beasiswa, mitra }) {
+function BeasiswaDetailMitra({ idBeasiswa, listSiswa }) {
+  const [beasiswa, setBeasiswa] = useState(null);
+
+  useEffect(() => {
+    if (idBeasiswa) {
+      getBeasiswa(idBeasiswa).then((res) => {
+        setBeasiswa(res.beasiswa);
+      });
+    }
+  }, [idBeasiswa]);
+
   return (
     <div className="rounded-lg border border-gray-300 p-4 shadow-md">
       {!beasiswa ? (
@@ -11,16 +23,9 @@ function BeasiswaDetailMitra({ beasiswa, mitra }) {
         </p>
       ) : (
         <>
-          <h2 className="text-xl font-semibold">{beasiswa.judul_beasiswa}</h2>
-          {/* <h2 className="text-xl font-semibold">{beasiswa.nama}</h2> */}
-          <div className="flex gap-4">
-            <p>{beasiswa.namaMitra}</p>
-            {mitra && (
-              <p className="font-semibold">
-                {mitra.pic} ({mitra.nomorPic})
-              </p>
-            )}
-          </div>
+          <h2 className="text-xl font-semibold">
+            {beasiswa.judulBeasiswa || beasiswa.namaBeasiswa}
+          </h2>
           {beasiswa.tanggalPembukaan && beasiswa.tanggalPenutupan && (
             <div className="mt-2 grid w-fit grid-cols-[auto_auto] gap-x-4">
               <span className="font-semibold">Buka</span>
@@ -37,32 +42,8 @@ function BeasiswaDetailMitra({ beasiswa, mitra }) {
               </time>
             </div>
           )}
-          {beasiswa.tanggal_pembukaan && beasiswa.tanggal_penutupan && (
-            <div className="mt-2 grid w-fit grid-cols-[auto_auto] gap-x-4">
-              <span className="font-semibold">Buka</span>
-              <time dateTime={beasiswa.tanggal_pembukaan}>
-                {format(new Date(beasiswa.tanggal_pembukaan), 'dd MMMM yyyy', {
-                  locale: id,
-                })}
-              </time>
-              <span className="font-semibold">Tutup</span>
-              <time dateTime={beasiswa.tanggal_penutupan}>
-                {format(new Date(beasiswa.tanggal_penutupan), 'dd MMMM yyyy', {
-                  locale: id,
-                })}
-              </time>
-            </div>
-          )}
-          <h2 className="mt-6 font-semibold">Deskripsi</h2>
-          <p className="mt-1">{beasiswa.deskripsi}</p>
-          <h2 className="mt-6 font-semibold">Benefits</h2>
-          <p className="mt-1">
-            {beasiswa.benefits.split(`\\n`).map((benefits) => (
-              <p>{benefits}</p>
-            ))}
-          </p>
-
-          <TableSiswaComponent />
+          <p className="mt-4">{beasiswa.deskripsi}</p>
+          <TableSiswaComponent dataSiswa={listSiswa} />
         </>
       )}
     </div>
